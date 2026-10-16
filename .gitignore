@@ -1,0 +1,78 @@
+# =============================================================
+# GiftPick .gitignore
+# 原则：密钥、真实数据、评测原始证据、本地缓存与构建产物一律不入库。
+# =============================================================
+
+# ---------- 凭据 / 环境变量（务必不要提交真实值） ----------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.jks
+
+# ---------- 文档与内部记录（按需求不上传） ----------
+docs/
+.research/
+
+# ---------- 非必要源码目录（按需求不上传） ----------
+# 注意：tests/ 与 scripts/ 是本地开发与评测辅助，不随仓库分发。
+tests/
+scripts/
+knowledge/
+eval/
+
+# ---------- 评测原始证据（含真实请求/买家文本，体积大） ----------
+eval/verification/
+# 评测运行产物（报告、请求账本等），如需保留可显式 git add -f
+eval/**/report.html
+eval/**/*.ledger.jsonl
+eval/**/runs/
+
+# ---------- 真实数据 / 本地运行数据 ----------
+# data/ 为真实商品目录，默认整体不上传；
+# 若想保留小体积测试固件，取消下一行注释：
+data/*
+# !data/catalog-v1.jsonl
+*.sqlite
+*.sqlite3
+*.db
+qdrant_storage/
+logs/
+*.log
+
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.uv-cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+build/
+*.egg-info/
+.eggs/
+
+# ---------- 前端 ----------
+node_modules/
+frontend/node_modules/
+frontend/dist/
+
+# ---------- IDE / 编辑器 ----------
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ---------- 其他 ----------
+*.tmp
+*.bak
