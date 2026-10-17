@@ -1,0 +1,22 @@
+# 仓库统一以 LF 存储，检出时按各平台习惯（Windows 自动 CRLF）。
+# 避免 Windows / WSL / macOS 之间产生整仓库行尾 diff。
+* text=auto
+
+# 必须在任何平台都保持 LF 的文件（Shell 脚本、容器、CI）
+*.sh      text eol=lf
+Dockerfile text eol=lf
+*.dockerfile text eol=lf
+Makefile  text eol=lf
+*.yml     text eol=lf
+*.yaml    text eol=lf
+
+# 二进制资源不做行尾转换
+*.png     binary
+*.jpg     binary
+*.jpeg    binary
+*.gif     binary
+*.ico     binary
+*.webp    binary
+*.woff    binary
+*.woff2   binary
+*.pdf     binary
