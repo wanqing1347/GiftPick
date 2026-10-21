@@ -13,7 +13,7 @@ export function useCommerceAgent() {
     let accessToken = import.meta.env.VITE_API_TOKEN;
     try { accessToken ||= storage?.getItem("giftpick.access-token"); } catch { /* 可使用构建配置。 */ }
     return new CommerceClient({ url: `${base}/commerce/ag-ui/run`, storage,
-      buyerId: import.meta.env.VITE_BUYER_ID || "pao-coder", accessToken });
+      buyerId: import.meta.env.VITE_BUYER_ID || "zr", accessToken });
   });
   const snapshot = useSyncExternalStore(client.subscribe, client.getSnapshot);
   useEffect(() => { void client.initialize(); return () => client.detach(); }, [client]);

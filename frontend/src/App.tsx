@@ -291,6 +291,10 @@ export default function App() {
     { id: "skills", label: "我的 Skill", icon: "leaf" },
     { id: "preferences", label: "长期偏好", icon: "spark" },
   ];
+  const breadcrumbLabel = view === "skills" ? "我的 Skill"
+    : view === "preferences" ? "长期偏好"
+      : view === "history" ? "选购对话历史"
+        : view === "favorites" ? "心选收藏" : null;
 
   return (
     <>
@@ -298,12 +302,11 @@ export default function App() {
         <button
           className="brand"
           onClick={() => switchView("shopping")}
-          aria-label="GiftPick 环球好物首页"
+          aria-label="GiftPick 首页"
         >
           <Icon name="globe" className="brand-mark" />
           <span>
             <span className="brand-name">GiftPick</span>
-            <span className="brand-subtitle">环球好物</span>
           </span>
         </button>
         <button className="new-chat" onClick={newShopping} disabled={busy}>
@@ -342,19 +345,10 @@ export default function App() {
           <p className="sidebar-empty">第一段选购，等你开启。</p>
         )}
         <div className="sidebar-bottom">
-          <div className="sidebar-note">
-            <Icon name="globe" className="little-orbit" />
-            <p>
-              世界很大，
-              <br />
-              适合你的，刚刚好。
-            </p>
-          </div>
           <div className="profile">
-            <span className="avatar">旅</span>
+            <span className="avatar">zr</span>
             <span>
-              <span className="profile-name">{import.meta.env.VITE_BUYER_ID || "pao-coder"}</span>
-              <span className="profile-caption">每一次选择，都有新发现</span>
+              <span className="profile-name">{import.meta.env.VITE_BUYER_ID || "zr"}</span>
             </span>
             <Icon name="leaf" />
           </div>
@@ -363,17 +357,7 @@ export default function App() {
       <main>
         <div className="content">
           <header className="topbar">
-            <div className="breadcrumb">
-              <span>环球好物</span>
-              <span>／</span>
-              <span>
-                {view === "skills" ? "我的 Skill" : view === "preferences" ? "长期偏好" : view === "history"
-                  ? "选购对话历史"
-                  : view === "favorites"
-                    ? "心选收藏"
-                    : "为你挑选"}
-              </span>
-            </div>
+            {breadcrumbLabel && <div className="breadcrumb"><span>{breadcrumbLabel}</span></div>}
             <button
               className="mobile-brand"
               onClick={() => switchView("shopping")}
@@ -381,12 +365,7 @@ export default function App() {
               <Icon name="globe" />
               GiftPick
             </button>
-            <div className="location">
-              <Icon name="pin" />
-              {landedDestination
-                ? `配送至 ${landedDestination}`
-                : "好物，跨越距离"}
-            </div>
+            {landedDestination && <div className="location"><Icon name="pin" />配送至 {landedDestination}</div>}
           </header>
           <nav className="mobile-nav" aria-label="移动导航">
             <button onClick={newShopping} disabled={busy}>
@@ -406,13 +385,6 @@ export default function App() {
             request={agent.workspaceRequest} onSkillsChanged={agent.refreshSkills} />}
           {view === "shopping" && (
             <>
-              <section className="hero">
-                <div className="eyebrow">A LITTLE LESS, A LITTLE BETTER</div>
-                <h1>
-                  为下一次出发，<em>选得刚刚好。</em>
-                </h1>
-                <p>说说你的期待。世界各地的好物，我陪你慢慢选。</p>
-              </section>
               {!agent.messages.length && !shoppingForm ? (
                 <section className="welcome-panel">
                   <Icon name="globe" className="welcome-orbit" />
@@ -760,11 +732,6 @@ export default function App() {
               </button>
             </div>
           </form>
-          <footer className="preview-footer">
-            <span>GiftPick 环球好物</span>
-            <span>·</span>
-            <span>认真挑选，从容决定</span>
-          </footer>
         </div>
       </div>}
       {detail && (
